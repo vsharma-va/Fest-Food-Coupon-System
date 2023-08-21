@@ -1,0 +1,9 @@
+/api/db/__pycache__/*
+/api/__pycache__/*
+/api/env/*
+/api/routers/__pycache__/*
+/api/routers/auth/__pycache__/*
+/api/routers/gen/__pycache__/*
+/api/routers/scan/__pycache__/*
+/api/api.config
+/scanner/*
