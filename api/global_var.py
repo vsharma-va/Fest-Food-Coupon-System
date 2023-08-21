@@ -6,7 +6,7 @@ parser = ConfigParser()
 parser.read("api.config")
 supabase: Client = create_client(parser['SUPABASE']['url'], parser['SUPABASE']['key'])
 
-roles_list = ["CC", "OC", "VLT"]
+roles_list = ["CC", "OC", "VLT", "VEND"]
 bank_balance_per_role = {"CC": 1000.0, "OC": 1000.0, "VLT": 0.0}
 block_list = ["VLT"]
 

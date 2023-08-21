@@ -88,14 +88,18 @@ class Supa:
                 qr_data, parser["QR"]["secret_key"], algorithm="HS256"
             )
             try:
-                response = self.supabase.table("generated_qrs").insert(
-                    {
-                        "user_id": user_id,
-                        "jwt": jwt_encoded,
-                        "scanned": f"{False}",
-                        "banned": f"{False}",
-                    }
-                ).execute()
+                response = (
+                    self.supabase.table("generated_qrs")
+                    .insert(
+                        {
+                            "user_id": user_id,
+                            "jwt": jwt_encoded,
+                            "scanned": f"{False}",
+                            "banned": f"{False}",
+                        }
+                    )
+                    .execute()
+                )
                 return jwt_encoded
             except exceptions.APIError as err:
                 raise HTTPException(
@@ -105,3 +109,37 @@ class Supa:
             raise HTTPException(
                 status_code=401, detail="RLS blocked access to accounts"
             )
+
+    def scan_qr_procedure(
+        self, user_id: str, jwt_encoded_str: str, vend_id: str, coupon_type: str
+    ):
+        try:
+            response_qr = (
+                self.supabase.table("generated_qrs")
+                .update({"scanned": f"{True}"})
+                .eq("user_id", f"{user_id}")
+                .eq("jwt", f"{jwt_encoded_str}")
+                .execute()
+            )
+            response_account = (
+                self.supabase.table("accounts")
+                .update({"in_wallet": f"{0}"})
+                .eq("user_id", f"{user_id}")
+                .execute()
+            )
+            self.supabase.table("vend_scan").insert(
+                {
+                    "user_id": f"{user_id}",
+                    "vend_id": f"{vend_id}",
+                    "jwt": f"{jwt_encoded_str}",
+                    "coupon_type": f"{coupon_type}",
+                }
+            ).execute()
+            if len(response_qr.data) != 0 and len(response_account.data) != 0:
+                return response_account
+            else:
+                raise HTTPException(
+                    status_code=401, detail="RLS blocked access to tables"
+                )
+        except exceptions.APIError as err:
+            raise HTTPException(status_code=401, detail=f"{err}")

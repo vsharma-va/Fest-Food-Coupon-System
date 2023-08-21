@@ -13,6 +13,7 @@ async def generate_qr(
 ):
     db_client = Supa(supabase)
     try:
+        print(user_state)
         response = db_client.get_user_role(user_state.supabase_id)
         role_type = response.data[0]["role_name"]
         allowed_coupon_types = allowed_coupon_to_roles[role_type]

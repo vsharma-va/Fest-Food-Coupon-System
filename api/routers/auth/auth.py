@@ -40,6 +40,9 @@ async def check_auth_state(user_state: UserAuthState):
     except gotrue.errors.AuthApiError as err:
         raise HTTPException(status_code=401, detail=f"{err}")
 
+@router.post("/auth/checkAuthState/")
+async def check_auth_state_route(user_auth_state: UserAuthState=Depends(check_auth_state)):
+    return {"status": "200", "detail": {"user_state": user_auth_state}}
 
 @router.post("/auth/signup/")
 async def signup(user: UserSignUp) -> dict:
