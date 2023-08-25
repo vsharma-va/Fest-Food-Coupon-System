@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 class CommonTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
+  final TextInputType? textInputType;
 
   const CommonTextField({
     Key? key,
     required this.controller,
     required this.labelText,
+    required this.textInputType,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      keyboardType: textInputType ?? TextInputType.number,
       // textCapitalization: TextCapitalization.characters,
       textAlign: TextAlign.center,
       style: const TextStyle(color: Colors.white),

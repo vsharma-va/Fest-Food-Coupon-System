@@ -31,3 +31,16 @@ Future<http.Response> scanCode(
   );
   return response;
 }
+
+Future<http.Response> checkCode(String code, String vendorAuthKey) async {
+  final response =
+      await http.post(Uri.parse("${constValue.apiUri}/api/vendor/check"),
+          headers: {
+            'ContentType': 'application/json',
+          },
+          body: jsonEncode({
+            'vendorAuthKey': vendorAuthKey,
+            'code': code,
+          }));
+  return response;
+}

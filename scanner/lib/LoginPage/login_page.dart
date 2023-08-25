@@ -84,6 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: SizedBox(
                       width: double.infinity,
                       child: CommonTextField(
+                        textInputType: TextInputType.emailAddress,
                         controller: vendorAuthKeyController,
                         labelText: "Vendor Authorization Key",
                       ),
