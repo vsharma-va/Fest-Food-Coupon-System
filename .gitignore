@@ -6,4 +6,3 @@
 /api/routers/gen/__pycache__/*
 /api/routers/scan/__pycache__/*
 /api/api.config
-/scanner/*
