@@ -31,9 +31,9 @@ class _LoginPageState extends State<LoginPage> {
         log(jsonValue['status'].toString());
         if (jsonValue['status'] == '200') {
           prefs.setString(
-              "vendorName", "${jsonValue['detail']['userState']['userName']}");
+              "vendorName", "${jsonValue['detail']['authState']['userName']}");
           prefs.setString("vendorAuthKey",
-              "${jsonValue['detail']['userState']['vendorAuthKey']}");
+              "${jsonValue['detail']['authState']['vendorAuthKey']}");
           context.showCommonSnackBar(
               message: "Login Success!",
               backgroundColor: const Color.fromRGBO(102, 187, 106, 1));
